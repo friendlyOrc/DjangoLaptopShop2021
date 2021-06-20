@@ -1,0 +1,26 @@
+<div class="brands-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="brand-wrapper" style="color: black">
+                            {% for cat in cate %}
+                                <a href="/category/{{cat.id}}" class="category_link">{{ cat.name }}</a> 
+                            {% endfor %}        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End brands area -->
+    
+<style>
+    .brand-wrapper{
+        display: flex;
+        justify-content: center;
+    }
+    .category_link{
+        text-decoration: none;
+        font-size: 2vw;
+        margin: 0 3vw
+    }
+</style>

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include 'header.html'%}
+
+    {% include 'branding.html'%}
+
+    {% include 'mainmenu.html'%}
+
+
+
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+            <h1>You searched for: {{key}}</h1>
+                <div class="row">
+
+                    {% for prd in prod %}
+                        <div class="col-md-3">
+                            <div class="single-product">    
+                                <div class="product-f-image">
+                                    {% load static%}
+                                    <img src="/static/images/{{ prd.image }}.jpg" alt="">
+                                    <div class="product-hover">
+                                        <a href="/product/{{ prd.id }}" class="view-details-link"><i class="fas fa-link"></i> See details</a>
+                                    </div>
+                                </div>
+                                
+                                <h2><a href="/product/{{ prd.id }}">{{ prd.name}}</a></h2>
+                                
+                                <div class="product-carousel-price">
+                                    {{ prd.price }}đ
+                                </div> 
+                            </div>
+                        </div>
+                    {% endfor %}    
+                    
+                </div>
+
+                {% comment %} <div class="row">
+                    <div class="col-md-12">
+                        <div class="product-pagination text-center">
+                            <nav>
+                                <ul class="pagination">
+                                    <li>
+                                        <a href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li>
+                                        <a href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+
+            </div>
+        </div>
+
+
+    {% include 'footer.html'%}
+{% endblock %}

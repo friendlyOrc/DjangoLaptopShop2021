@@ -1,0 +1,22 @@
+<div class="site-branding-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="logo">
+                    <h1>
+                        {% load static %}
+                        <a href="{% url 'index' %}""><img src={% static 'images/logo.png' %}> </a>
+                    </h1>
+                </div>
+            </div>
+            <div class="col-sm-6">
+            {% if logged%}
+                <div class="shopping-item">
+                    <a href="/cart">Cart <i class="fas fa-shopping-cart"></i> <span class="product-count">{{num_item}}</span></a>
+                </div>
+            {% endif%}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End site branding area -->

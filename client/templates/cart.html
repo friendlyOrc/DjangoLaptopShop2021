@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include 'header.html'%}
+
+    {% include 'branding.html'%}
+
+    {% include 'mainmenu.html'%}
+
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>Shopping Cart</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page title area -->
+
+
+
+    <div class="col-md-12 d-flex justify-content-center">
+        <div class="product-content-right">
+            <div class="woocommerce">
+
+                <table cellspacing="0" class="shop_table cart">
+                    <thead>
+                        <tr>
+                            <th class="product-name">Product</th>
+                            <th class="product-price">Price</th>
+                            <th class="product-quantity">Quantity</th>
+                            <th class="product-subtotal">Total</th>
+                            <th class="product-remove">Update</th>
+                            <th class="product-remove">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% if msg %}
+                            <div class="alert alert-success" role="alert">
+                                Updated!
+                            </div>
+                        {%endif%}
+                        {% if del %}
+                            <div class="alert alert-success" role="alert">
+                                Deleted!
+                            </div>
+                        {%endif%}
+                        {% if ord %}
+                            <div class="alert alert-success" role="alert">
+                                Deleted!
+                            </div>
+                        {%endif%}
+                        {% if num_item == 0%}
+                            <div class="alert alert-success" role="alert">
+                                Empty Cart!
+                            </div>
+                        {%endif%}
+                        {% for prd in prdList%}
+                            
+                            <tr class="cart_item">
+                                </td>
+
+                                <td class="product-name">
+                                <a href ="/product/{{prd.prod.id}}"> {{prd.prod.name}}</a>
+                                </td>
+
+                                <td class="product-price">
+                                    {{prd.prod.price}}
+                                </td>
+
+                                <form method="POST" action="/cart/update/{{prd.id}}">
+                                        {% csrf_token %}
+                                    <td class="product-quantity">
+                                        <div class="quantity buttons_added">
+                                            <input type="number" min = 1 value='{{prd.quanity}}' size="4" name="amount" class="input-text qty text" name="amount">
+                                        </div>
+
+                                    </td>
+                                    <td class="product-subtotal">
+                                        <span class="amount"> {{ prd.total}} </span>
+                                    </td>
+
+                                    <td class="actions">
+                                        <input type="submit" value="Update" name="update_cart" class="button">
+                                    </td>
+                                    <td class="product-remove">
+                                        <a title="Remove this item" class="remove" href="/cart/remove/{{prd.id}}">Remove</a>
+                                    </td>
+                                </form>
+
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+
+                <form action="/cart" method="POST" class="d-flex flex-column">
+
+                    {% csrf_token %}
+                    <label><b>Address info</b>   </label>
+                    <input placeholder="Description" name="des" type="text" required/>
+                    <input placeholder="Ward" name="ward" type="text" required/>
+                    <input placeholder="Road" name="road" type="text" required/>
+                    <input placeholder="Province" name="province" type="text" required/>
+                    <input placeholder="City" name="city" type="text" required/>
+                    
+                    <label>Normal shipping: 15.000đ</label>
+                    <label>Fast shipping: 30.000đ</label>
+                    <input type="radio" id="fast" name="speed" value="1"> 
+                    <label for="male">Fast shipping</label>
+                    <input type="radio" id="nor" name="speed" value="0" checked> 
+                    <label for="nor">Normal shipping</label>
+
+                    <label><b>Note for shipper</b></label>
+                    <input placeholder="Note for shipper" name="note" type="text"/>
+
+                    <br/>
+                    <label><b>Payment</b></label>
+                    <select name="payment_type">
+                        <option value="1">Cash</option>
+                        <option value="2">Banking</option>
+                    </select>
+                    <br/>
+                    <p>Banking option: 0123456789 - ABC. With the message is your username + order id. Ex: "kienpt 001"</p>
+                    <input placeholder="Bank" name="bank" type="text">
+                    
+                    <button type="submit">ORDER</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+
+
+    {% include 'footer.html'%}
+{% endblock %}

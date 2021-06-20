@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include 'header.html'%}
+
+    {% include 'branding.html'%}
+
+    {% include 'mainmenu.html'%}
+
+
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+            
+                <div class="col-md-12">
+                    <div class="product-content-right">
+                        <div class="product-breadcroumb">
+                            <a href="{% url 'index'%}">Home</a>
+                            <a href="/category/{{prod.category.id}}">{{ prod.category.name}}</a>
+                            <a href="/product/{{prod.id}}">{{ prod.name}}</a>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="product-images">
+                                    <div class="product-main-img">
+                                        <img src="/static/images/{{ prod.image }}.jpg" alt="">
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="product-inner">
+                                    <h2 class="product-name">{{ prod.name}}</h2>
+                                    {% if msg %}
+                                        <div class="alert alert-success" role="alert">
+                                            Added to Cart!
+                                        </div>
+                                    {%endif%}
+                                    {% if cmt %}
+                                        <div class="alert alert-success" role="alert">
+                                            Review added!
+                                        </div>
+                                    {%endif%}
+                                    <div class="product-inner-price" >
+                                        <ins>{{ prod.price}}đ</ins>
+                                    </div>
+
+                                    <form action="/cart/add/{{prod.id}}" method="POST" class="cart">
+                                        {% csrf_token %}
+                                        <div class="quantity">
+                                            <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="amount" min="1" step="1" />
+                                        </div>
+                                        <button class="add_to_cart_button" type="submit">
+                                            Add to cart
+                                        </button>
+                                    </form>
+
+                                    <div class="product-inner-category">
+                                        <p>
+                                            Category: <a href="">{{ prod.category.name}}</a>. 
+                                        </p>
+                                        <p>
+                                            Rating: 
+                                            {% if prod.rate.rate == 1 %}
+                                                Positive
+                                            {% elif prod.rate.rate == 0 %}
+                                                Neutral
+                                            {% elif prod.rate.rate == -1 %}
+                                                Negative
+                                            {% else %}
+                                                Coming soon!
+                                            {%endif%}
+                                        </p>
+                                        <p>
+                                            Attribute:
+                                            {% for attr in attrs%}
+                                                <span class="badge rounded-pill bg-info text-dark">{{attr.name}}</span>
+                                            {% endfor%}
+                                        </p>
+                                    </div>
+
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Description</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Review</button>
+                                        </li>
+                                    </ul>
+
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                            <br>
+                                            <h2>Product Description</h2>
+                                            <p><b>Description: </b> {{ prod.des}}</p>
+                                            <p><b>Year:</b> {{prod.year}}</p>
+                                            <p><b>Screen:</b> {{prod.screen}} Inch</p>
+                                            <p><b>Battery:</b> {{prod.battery}} mAh</p>
+                                            <p><b>Ram:</b> {{prod.ram}} Gb</p>
+                                            <p><b>Memory:</b> {{prod.memory}} Gb</p>
+                                            <p><b>Operating System:</b> {{prod.os}}</p>
+                                        </div>
+                                        <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                            <br>
+                                            <h2>Reviews</h2>
+                                            <div>
+                                                <div class="prd_cmt">
+                                                        
+                                                        {% for cmt in coms%}
+                                                        <span class="badge bg-light text-dark">{{cmt.client.name}}</span>
+                                                            <div class="alert alert-primary" role="alert">
+                                                                {{cmt.content}}
+                                                                
+                                                            </div>
+                                                        {% endfor%}
+                                                </div>
+                                            </div>
+                                            <div class="submit-review">
+                                                <label for="review">Your review</label>
+
+                                                <form action="/comment/{{ prod.id}}" method="POST">
+                                                    {% csrf_token %}
+                                                    <textarea name="review" id="" cols="30" rows="10"></textarea>
+                                                    <p><input type="submit" value="Submit" /></p>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% include 'footer.html'%}
+{% endblock %}

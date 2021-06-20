@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include 'header.html'%}
+
+    {% include 'branding.html'%}
+
+    {% include 'mainmenu.html'%}
+
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>ORDER LIST</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Page title area -->
+
+
+
+    <div class="col-md-12 d-flex justify-content-center">
+        <div class="product-content-right">
+            <div class="woocommerce">
+
+                <table cellspacing="0" class="shop_table cart">
+                    <thead>
+                        <tr>
+                            <th class="product-name">Status</th>
+                            <th class="product-name">Order Date</th>
+                            <th class="product-subtotal">Total</th>
+                            <th class="product-subtotal">Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% if ord %}
+                            <div class="alert alert-success" role="alert">
+                                Submit order successfull!
+                            </div>
+                        {%endif%}
+                        {% for ord in orderList%}
+                            
+                            {% if ord.status != 0 %}
+                            
+                                <tr class="cart_item">
+
+                                    <td class="product-price">
+                                        {% if ord.status == 1 %}
+                                            Waiting
+                                        {% elif ord.status == 2%}
+                                            Shipping
+                                        {% elif ord.status == -1%}
+                                            Decline
+                                        {%endif%}
+                                    </td>
+
+                                    <td class="product-price">
+                                        {{ord.createDate}}
+                                    </td>
+
+                                    <td class="product-price">
+                                        {{ord.total}}
+                                    </td>
+
+                                    <td class="product-price">
+                                        {{ord.note}}
+                                    </td>
+
+                                </tr>
+                            {%endif%}
+                        {%endfor%}
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+
+
+    {% include 'footer.html'%}
+{% endblock %}

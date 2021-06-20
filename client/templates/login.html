@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="login" method="POST" class="d-flex flex-column" style="width: 15vw; margin: 10vw auto">
+        {% if fail %}
+            <div class="alert alert-danger" role="alert">
+                Invalid username/password
+            </div>
+        {%elif signup%}
+            <div class="alert alert-success" role="alert">
+                Sign up successfull!
+            </div>
+        {%endif%}
+
+        {% csrf_token %}
+        <h1>Login</h1>
+        <input placeholder="Username" name="username" type="text" required="">
+        <input placeholder="Password" name="password" type="password" required="">
+        <button type="submit">Login</button>
+    <a href="/signup">Create an account</a>
+    </form>
+{% endblock%}
